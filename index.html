@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>the duds | Viewer</title>
+    <link rel="icon" href="favicon.png" />
+    <meta name="title" content="the duds | Viewer" />
+    <meta
+      name="description"
+      content="Don't wait for 7/28/2022. Reveal your 'the duds' now!"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://apoorvlathey.com/the-duds-viewer/"
+    />
+    <meta property="og:title" content="the duds | Viewer" />
+    <meta
+      property="og:description"
+      content="Don't wait for 7/28/2022. Reveal your 'the duds' now!"
+    />
+    <meta
+      property="og:image"
+      content="https://apoorvlathey.com/the-duds-viewer/metaIMG.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://apoorvlathey.com/the-duds-viewer/"
+    />
+    <meta property="twitter:title" content="the duds | Viewer" />
+    <meta
+      property="twitter:description"
+      content="Don't wait for 7/28/2022. Reveal your 'the duds' now!"
+    />
+    <meta
+      property="twitter:image"
+      content="https://apoorvlathey.com/the-duds-viewer/metaIMG.png"
+    />
+    <script>
+      // overwrite the date object
+      Date.now = function () {
+        return new Date(2022, 7, 29);
+      };
+    </script>
+  </head>
+  <body>
+    loading...
+    <script>
+      const getHTML = async () => {
+        try {
+          let id = GetURLParameter("id");
+          const res = await fetch(
+            "https://infura-ipfs.io/ipfs/QmV533Ck8Jc9LPK9EQPestS4k3XqEvgNci667seizY52Hx/" +
+              id +
+              ".html"
+          );
+          const html = await res.text();
+          // Convert the HTML string into a document object
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+
+          const canvas = doc.querySelector("canvas");
+          const script = doc.querySelector("script");
+
+          const script2 = document.createElement("script");
+          script2.innerHTML = script.innerHTML;
+
+          document.body.appendChild(canvas);
+          document.body.appendChild(script2);
+        } catch {
+          alert("Unable to fetch data, try ids between 322-608 in the url\nlike this: https://apoorvlathey.com/the-duds-viewer/?id=322");
+        }
+      };
+
+      getHTML();
+
+      function GetURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split("&");
+        for (var i = 0; i < sURLVariables.length; i++) {
+          var sParameterName = sURLVariables[i].split("=");
+          if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
